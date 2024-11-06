@@ -30,6 +30,10 @@ import java.util.ResourceBundle;
 public class DB_GUI_Controller implements Initializable {
 
     @FXML
+    private Button addBtn;
+
+
+    @FXML
     TextField first_name, last_name, department, major, email, imageURL;
     @FXML
     ImageView img_view;
