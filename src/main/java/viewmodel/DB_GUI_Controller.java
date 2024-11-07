@@ -31,9 +31,13 @@ import java.util.ResourceBundle;
 
 public class DB_GUI_Controller implements Initializable {
 
-    //added btn
+    //added edit btn
     @FXML
     private Button editBtn;
+
+    //added delete Btn
+    @FXML
+    private Button deleteBtn;
 
 
     @FXML
@@ -66,6 +70,8 @@ public class DB_GUI_Controller implements Initializable {
             //new code
             // Disables the "Edit" button at first
             editBtn.setDisable(true);
+            //Disables "delete" button at first
+            deleteBtn.setDisable(true);
 
             // Adds a listener to the TableView to monitor the changes
             tv.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
@@ -73,6 +79,8 @@ public class DB_GUI_Controller implements Initializable {
                 public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
                     // Enables "Edit" button if a record is selected, otherwise it disables again
                     editBtn.setDisable(newValue == null);
+                    // Enables "Delete" button if a record is selected, otherwise disables again
+                    deleteBtn.setDisable(newValue == null);
                 }
             });
 
