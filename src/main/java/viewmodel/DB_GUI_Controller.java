@@ -2,6 +2,8 @@ package viewmodel;
 
 import dao.DbConnectivityClass;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,8 +31,9 @@ import java.util.ResourceBundle;
 
 public class DB_GUI_Controller implements Initializable {
 
+    //added btn
     @FXML
-    private Button addBtn;
+    private Button editBtn;
 
 
     @FXML
@@ -58,6 +61,23 @@ public class DB_GUI_Controller implements Initializable {
             tv_major.setCellValueFactory(new PropertyValueFactory<>("major"));
             tv_email.setCellValueFactory(new PropertyValueFactory<>("email"));
             tv.setItems(data);
+
+
+            //new code
+            // Disables the "Edit" button at first
+            editBtn.setDisable(true);
+
+            // Adds a listener to the TableView to monitor the changes
+            tv.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
+                @Override
+                public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
+                    // Enables "Edit" button if a record is selected, otherwise it disables again
+                    editBtn.setDisable(newValue == null);
+                }
+            });
+
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
