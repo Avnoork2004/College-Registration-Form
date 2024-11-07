@@ -28,6 +28,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DB_GUI_Controller implements Initializable {
 
@@ -38,6 +40,10 @@ public class DB_GUI_Controller implements Initializable {
     //added delete Btn
     @FXML
     private Button deleteBtn;
+
+    //added add btn
+    @FXML
+    private Button addBtn;
 
 
     @FXML
@@ -85,11 +91,45 @@ public class DB_GUI_Controller implements Initializable {
             });
 
 
+            // Disables the "Add" button at first
+            addBtn.setDisable(true);
+
+            // Adds listeners to the text fields
+            first_name.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            last_name.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            department.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            major.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            email.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            imageURL.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    //added new method to validate the Form
+    private void validateForm() {
+        // Checks if a field is empty or if a email is invalid
+        boolean isFirstNameValid = !first_name.getText().isEmpty();
+        boolean isLastNameValid = !last_name.getText().isEmpty();
+        boolean isDepartmentValid = !department.getText().isEmpty();
+        boolean isMajorValid = !major.getText().isEmpty();
+        boolean isEmailValid = isValidEmail(email.getText());
+        boolean isImageURLValid = !imageURL.getText().isEmpty();
+
+        // Enables the Add button if ALL the fields are valid
+        addBtn.setDisable(!(isFirstNameValid && isLastNameValid && isDepartmentValid &&
+                isMajorValid && isEmailValid && isImageURLValid));
+    }
+        // if the email is valid then this method will execute
+    private boolean isValidEmail(String email) {
+        // Regex to validate email
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 
     @FXML
     protected void addNewRecord() {
@@ -112,6 +152,7 @@ public class DB_GUI_Controller implements Initializable {
         major.setText("");
         email.setText("");
         imageURL.setText("");
+        addBtn.setDisable(true); // Disable add button after form clears
     }
 
     @FXML
