@@ -107,28 +107,64 @@ public class DB_GUI_Controller implements Initializable {
         }
     }
 
-    //added new method to validate the Form
+    //validates the feilds
     private void validateForm() {
-        // Checks if a field is empty or if a email is invalid
-        boolean isFirstNameValid = !first_name.getText().isEmpty();
-        boolean isLastNameValid = !last_name.getText().isEmpty();
-        boolean isDepartmentValid = !department.getText().isEmpty();
-        boolean isMajorValid = !major.getText().isEmpty();
-        boolean isEmailValid = isValidEmail(email.getText());
-        boolean isImageURLValid = !imageURL.getText().isEmpty();
+        // Validates First Name with (letters & spaces)
+        boolean isFirstNameValid = isValidName(first_name.getText());
 
-        // Enables the Add button if ALL the fields are valid
+        // Validates Last Name with (letters & spaces)
+        boolean isLastNameValid = isValidName(last_name.getText());
+
+        // Validates Department with (letters, spaces, & hyphens)
+        boolean isDepartmentValid = isValidDepartment(department.getText());
+
+        // Validates Major ( letters, spaces, & hyphens)
+        boolean isMajorValid = isValidDepartment(major.getText());
+
+        // Validates Email
+        boolean isEmailValid = isValidEmail(email.getText());
+
+        // Validates Image URL ( valid image URL format)
+        boolean isImageURLValid = isValidImageURL(imageURL.getText());
+
+        // Enables Add button if ALL fields are valid
         addBtn.setDisable(!(isFirstNameValid && isLastNameValid && isDepartmentValid &&
                 isMajorValid && isEmailValid && isImageURLValid));
     }
-        // if the email is valid then this method will execute
+
+    //added regex patterns to every feild
+    // Regex to validate names (alphabet & spaces)
+    private boolean isValidName(String name) {
+        String nameRegex = "^[A-Za-z\\s]+$"; // letters & spaces
+        Pattern pattern = Pattern.compile(nameRegex);
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
+
+    // Regex to validate department & major ( letters, spaces, & hyphens)
+    private boolean isValidDepartment(String field) {
+        String departmentRegex = "^[A-Za-z\\s-]+$"; // Only letters, spaces, and hyphens
+        Pattern pattern = Pattern.compile(departmentRegex);
+        Matcher matcher = pattern.matcher(field);
+        return matcher.matches();
+    }
+
+    // Regex to validate email
     private boolean isValidEmail(String email) {
-        // Regex to validate email
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$"; // email validation
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+    // Regex to validate image URL (only common image extensions like https://www.pinterest.com/pin/.jpg)
+    private boolean isValidImageURL(String url) {
+        String imageURLRegex = "^(http|https)://.*\\.(jpg|jpeg|png|gif|bmp|webp)$"; // URL with image extension
+        Pattern pattern = Pattern.compile(imageURLRegex);
+        Matcher matcher = pattern.matcher(url);
+        return matcher.matches();
+    }
+
 
 
     @FXML
