@@ -45,6 +45,11 @@ public class DB_GUI_Controller implements Initializable {
     @FXML
     private Button addBtn;
 
+    //added a status message
+    @FXML
+    private Label statusLabel;
+
+
 
     @FXML
     TextField first_name, last_name, department, major, email, imageURL;
@@ -178,7 +183,15 @@ public class DB_GUI_Controller implements Initializable {
             data.add(p);
             clearForm();
 
-    }
+            //new code
+            //status label to show success message
+            try {
+                statusLabel.setText("Record added successfully.");
+            } catch (Exception e) { // exception
+                statusLabel.setText("Failed to add record.");
+            }
+
+}
 
     @FXML
     protected void clearForm() {
@@ -233,6 +246,15 @@ public class DB_GUI_Controller implements Initializable {
         data.remove(p);
         data.add(index, p2);
         tv.getSelectionModel().select(index);
+
+        //new code
+        try {
+            // Updates status label to show success message
+            statusLabel.setText("Record updated successfully.");
+        } catch (Exception e) {  //exception
+            statusLabel.setText("Failed to update record.");
+        }
+
     }
 
     @FXML
