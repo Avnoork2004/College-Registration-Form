@@ -123,3 +123,18 @@
 	-fx-background-radius: 2em;
 
 }
+
+/* new code */
+/* status label message */
+.bottom_label {
+    -fx-background-color: #2b2b2b;      /* Dark background color */
+    -fx-text-fill: #ffffff;             /* Light text color */
+    -fx-font-size: 14px;                /* Font size */
+    -fx-font-family: "Arial";           /* Font family */
+    -fx-padding: 10px;                  /* Padding around text */
+    -fx-alignment: center;              /* Center text alignment */
+    -fx-border-color: #555555;          /* border color */
+    -fx-border-width: 1px;              /* border width */
+    -fx-background-radius: 5px;         /* Rounded corners */
+}
+

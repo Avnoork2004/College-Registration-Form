@@ -72,7 +72,7 @@
             <bottom>
                 <HBox prefHeight="30.0" prefWidth="892.0" styleClass="admin_section" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="statusLabel" alignment="CENTER" prefHeight="35.0" prefWidth="920.0">
+                  <Label fx:id="statusLabel" alignment="CENTER" prefHeight="35.0" prefWidth="920.0" styleClass="bottom_label">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

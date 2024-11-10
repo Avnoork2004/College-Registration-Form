@@ -111,3 +111,18 @@
 	-fx-background-radius: 2em;
 
 }
+
+/* new code */
+/* status message label */
+.bottom_label {
+    -fx-background-color: #e0e0e0;      /* Light background color */
+    -fx-text-fill: #333333;             /* Dark text color */
+    -fx-font-size: 14px;                /* Font size */
+    -fx-font-family: "Arial";           /* Font family */
+    -fx-padding: 10px;                  /* Padding around text */
+    -fx-alignment: center;              /* Center text alignment */
+    -fx-border-color: #cccccc;          /* border color */
+    -fx-border-width: 1px;              /* border width */
+    -fx-background-radius: 5px;         /* Rounded corners */
+}
+
