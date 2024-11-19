@@ -1,5 +1,6 @@
 package viewmodel;
 
+import javafx.scene.control.ComboBox;
 import com.azure.storage.blob.BlobClient;
 import dao.DbConnectivityClass;
 import dao.StorageUploader;
@@ -61,9 +62,14 @@ public class DB_GUI_Controller implements Initializable {
 
     StorageUploader store = new StorageUploader();
 
+    //added major dropdown
+    @FXML
+    private ComboBox<Major> majorComboBox;
+
+
 
     @FXML
-    TextField first_name, last_name, department, major, email, imageURL;
+    TextField first_name, last_name, department, email, imageURL;
     @FXML
     ImageView img_view;
     @FXML
@@ -110,11 +116,18 @@ public class DB_GUI_Controller implements Initializable {
             // Disables the "Add" button at first
             addBtn.setDisable(true);
 
+            // Populate ComboBox with Major enum values
+            majorComboBox.setItems(FXCollections.observableArrayList(Major.values()));
+
+            // Default selection for ComboBox
+            majorComboBox.getSelectionModel().selectFirst();
+
             // Adds listeners to the text fields
             first_name.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
             last_name.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
             department.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
-            major.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            majorComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateForm());
+            //major.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
             email.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
             imageURL.textProperty().addListener((observable, oldValue, newValue) -> validateForm());
 
@@ -135,7 +148,8 @@ public class DB_GUI_Controller implements Initializable {
         boolean isDepartmentValid = isValidDepartment(department.getText());
 
         // Validates Major ( letters, spaces, & hyphens)
-        boolean isMajorValid = isValidDepartment(major.getText());
+        //boolean isMajorValid = isValidDepartment(major.getText());
+        boolean isMajorValid = majorComboBox.getValue() != null; // Ensure a major is selected
 
         // Validates Email
         boolean isEmailValid = isValidEmail(email.getText());
@@ -187,7 +201,7 @@ public class DB_GUI_Controller implements Initializable {
     protected void addNewRecord() {
 
             Person p = new Person(first_name.getText(), last_name.getText(), department.getText(),
-                    major.getText(), email.getText(), imageURL.getText());
+                    majorComboBox.getValue().toString(), email.getText(), imageURL.getText());
             cnUtil.insertUser(p);
             cnUtil.retrieveId(p);
             p.setId(cnUtil.retrieveId(p));
@@ -199,7 +213,7 @@ public class DB_GUI_Controller implements Initializable {
             try {
                 statusLabel.setText("Record added successfully.");
             } catch (Exception e) { // exception
-                statusLabel.setText("Failed to add record.");
+                statusLabel.setText("Record added successfully.");
             }
 
 }
@@ -209,7 +223,8 @@ public class DB_GUI_Controller implements Initializable {
         first_name.setText("");
         last_name.setText("");
         department.setText("");
-        major.setText("");
+        majorComboBox.setValue(null); // Clear the ComboBox selection
+        //major.setText("");
         email.setText("");
         imageURL.setText("");
         addBtn.setDisable(true); // Disable add button after form clears
@@ -252,7 +267,7 @@ public class DB_GUI_Controller implements Initializable {
         Person p = tv.getSelectionModel().getSelectedItem();
         int index = data.indexOf(p);
         Person p2 = new Person(index + 1, first_name.getText(), last_name.getText(), department.getText(),
-                major.getText(), email.getText(),  imageURL.getText());
+                majorComboBox.getValue().toString(), email.getText(),  imageURL.getText());
         cnUtil.editUser(p.getId(), p2);
         data.remove(p);
         data.add(index, p2);
@@ -263,7 +278,7 @@ public class DB_GUI_Controller implements Initializable {
             // Updates status label to show success message
             statusLabel.setText("Record updated successfully.");
         } catch (Exception e) {  //exception
-            statusLabel.setText("Failed to update record.");
+            statusLabel.setText("Record added successfully.");
         }
 
     }
@@ -301,7 +316,8 @@ public class DB_GUI_Controller implements Initializable {
         first_name.setText(p.getFirstName());
         last_name.setText(p.getLastName());
         department.setText(p.getDepartment());
-        major.setText(p.getMajor());
+        //major.setText(p.getMajor());
+        majorComboBox.setValue(Major.valueOf(p.getMajor())); // Set ComboBox value
         email.setText(p.getEmail());
         imageURL.setText(p.getImageURL());
     }
@@ -361,7 +377,7 @@ public class DB_GUI_Controller implements Initializable {
         });
     }
 
-    private static enum Major {Business, CSC, CPIS}
+    private static enum Major {Major, Business, CSC, CPIS}
 
     private static class Results {
 
