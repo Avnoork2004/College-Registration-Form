@@ -66,6 +66,19 @@ public class DB_GUI_Controller implements Initializable {
     @FXML
     private ComboBox<Major> majorComboBox;
 
+    //menu items under edit
+    @FXML
+    private MenuItem editItem;
+
+    @FXML
+    private MenuItem deleteItem;
+
+    @FXML
+    private MenuItem ClearItem;
+
+    @FXML
+    private MenuItem CopyItem;
+
 
 
     @FXML
@@ -101,6 +114,12 @@ public class DB_GUI_Controller implements Initializable {
             //Disables "delete" button at first
             deleteBtn.setDisable(true);
 
+            // Disables the menu items initially
+            editItem.setDisable(true);
+            deleteItem.setDisable(true);
+            ClearItem.setDisable(true);
+            CopyItem.setDisable(true);
+
             // Adds a listener to the TableView to monitor the changes
             tv.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
                 @Override
@@ -109,8 +128,26 @@ public class DB_GUI_Controller implements Initializable {
                     editBtn.setDisable(newValue == null);
                     // Enables "Delete" button if a record is selected, otherwise disables again
                     deleteBtn.setDisable(newValue == null);
+
+                    // Enable ClearItem if a row is selected, otherwise disable
+                    ClearItem.setDisable(newValue == null);
+
+                    // Enable or disable menu items based on selection
+                    boolean isSelected = newValue != null;
+                    editItem.setDisable(!isSelected);
+                    deleteItem.setDisable(!isSelected);
+
+
                 }
             });
+
+            // Disables ClearItem until the form is filled
+            first_name.textProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
+            last_name.textProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
+            department.textProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
+            majorComboBox.valueProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
+            email.textProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
+            imageURL.textProperty().addListener((observable, oldValue, newValue) -> validateClearItem());
 
 
             // Disables the "Add" button at first
@@ -135,6 +172,22 @@ public class DB_GUI_Controller implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    // Disables ClearItem based on form validation
+    private void validateClearItem() {
+        // Check if all fields are empty or if nothing is selected
+        boolean isFormFilled = !first_name.getText().isEmpty() ||
+                !last_name.getText().isEmpty() ||
+                !department.getText().isEmpty() ||
+                majorComboBox.getValue() != null ||
+                !email.getText().isEmpty() ||
+                !imageURL.getText().isEmpty();
+
+        // Enable or disable the ClearItem based on the form state or selection
+        ClearItem.setDisable(!isFormFilled && tv.getSelectionModel().getSelectedItem() == null);
+    }
+
+
 
     //validates the feilds
     private void validateForm() {
