@@ -281,6 +281,15 @@ public class DB_GUI_Controller implements Initializable {
         email.setText("");
         imageURL.setText("");
         addBtn.setDisable(true); // Disable add button after form clears
+
+        //logic added to clear the form if u click clear from the menu item
+        first_name.clear();
+        last_name.clear();
+        department.clear();
+        majorComboBox.setValue(null);
+        email.clear();
+        imageURL.clear();
+        tv.getSelectionModel().clearSelection();
     }
 
     @FXML
