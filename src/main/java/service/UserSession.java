@@ -13,54 +13,60 @@ public class UserSession {
     private String password;
     private String privileges;
 
+    // Private initialize user session
     private UserSession(String userName, String password, String privileges) {
         this.userName = userName;
         this.password = password;
         this.privileges = privileges;
         Preferences userPreferences = Preferences.userRoot();
-        userPreferences.put("USERNAME",userName);
-        userPreferences.put("PASSWORD",password);
-        userPreferences.put("PRIVILEGES",privileges);
+        userPreferences.put("USERNAME", userName);
+        userPreferences.put("PASSWORD", password);
+        userPreferences.put("PRIVILEGES", privileges);
     }
 
-
-
-    public static UserSession getInstace(String userName,String password, String privileges) {
-        if(instance == null) {
+    // Thread safe get instance of UserSession
+    public static synchronized UserSession getInstance(String userName, String password, String privileges) {
+        if (instance == null) {
             instance = new UserSession(userName, password, privileges);
         }
         return instance;
     }
 
-    public static UserSession getInstace(String userName,String password) {
-        if(instance == null) {
+    // Overloaded method with default privileges
+    public static synchronized UserSession getInstance(String userName, String password) {
+        if (instance == null) {
             instance = new UserSession(userName, password, "NONE");
         }
         return instance;
     }
-    public String getUserName() {
+
+    // Thread safe userName get
+    public synchronized String getUserName() {
         return this.userName;
     }
 
-    public String getPassword() {
+    // Thread safe password get
+    public synchronized String getPassword() {
         return this.password;
     }
 
-    public String getPrivileges() {
+    // Thread safe privileges get
+    public synchronized String getPrivileges() {
         return this.privileges;
     }
 
-    public void cleanUserSession() {
-        this.userName = "";// or null
+    // Thread safe clean user session
+    public synchronized void cleanUserSession() {
+        this.userName = ""; // or null
         this.password = "";
-        this.privileges = "";// or null
+        this.privileges = ""; // or null
     }
 
     @Override
     public String toString() {
         return "UserSession{" +
                 "userName='" + this.userName + '\'' +
-                ", privileges=" + this.privileges +
+                ", privileges='" + this.privileges + '\'' +
                 '}';
     }
 }
