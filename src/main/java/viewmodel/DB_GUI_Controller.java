@@ -27,9 +27,7 @@ import javafx.stage.Stage;
 import model.Person;
 import service.MyLogger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
@@ -78,6 +76,14 @@ public class DB_GUI_Controller implements Initializable {
 
     @FXML
     private MenuItem CopyItem;
+
+    //added 2 menu items import/export csv files
+    @FXML
+    private MenuItem exportCSV;
+
+    @FXML
+    private MenuItem importCSV;
+
 
 
 
@@ -172,6 +178,78 @@ public class DB_GUI_Controller implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    //imports csv file
+    @FXML
+    protected void importCSV(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showOpenDialog(menuBar.getScene().getWindow());
+
+        if (file != null) {
+            try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+                String line;
+                int lineNumber = 0;
+
+                // Skip the header
+                reader.readLine();
+
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split(",");
+                    if (data.length == 7) {
+                        // Assuming the CSV columns match Person class fields
+                        Person person = new Person(Integer.parseInt(data[0]), data[1], data[2], data[3], data[4], data[5], data[6]);
+                        cnUtil.insertUser(person); // Insert into DB if needed
+                        this.data.add(person); // Add to the observable list (table view)
+                    } else {
+                        statusLabel.setText("Invalid CSV format.");
+                        break;
+                    }
+                    lineNumber++;
+                }
+
+                // Update UI with success message
+                statusLabel.setText("Data imported successfully.");
+            } catch (Exception e) {
+                statusLabel.setText("Error importing data.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //exports csv file
+    @FXML
+    protected void exportCSV(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showSaveDialog(menuBar.getScene().getWindow());
+
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                // Writing the header to the CSV
+                writer.append("ID,First Name,Last Name,Department,Major,Email,Image URL\n");
+
+                // Writing each person data to the CSV
+                for (Person person : data) {
+                    writer.append(person.getId() + ",");
+                    writer.append(person.getFirstName() + ",");
+                    writer.append(person.getLastName() + ",");
+                    writer.append(person.getDepartment() + ",");
+                    writer.append(person.getMajor() + ",");
+                    writer.append(person.getEmail() + ",");
+                    writer.append(person.getImageURL() + "\n");
+                }
+
+                // Show success message
+                statusLabel.setText("Data exported successfully.");
+            } catch (Exception e) {
+                statusLabel.setText("Error exporting data.");
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // Disables ClearItem based on form validation
     private void validateClearItem() {
