@@ -107,7 +107,7 @@ public class SignUpController {
 
     public void createNewAccount(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Info for the user. Message goes here");
+        alert.setContentText("Your information has been stored into the database");
         alert.showAndWait();
     }
 
