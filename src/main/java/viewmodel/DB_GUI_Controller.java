@@ -432,18 +432,70 @@ public class DB_GUI_Controller implements Initializable {
         tv.getSelectionModel().select(index);
     }
 
+
+
+    //new code for progress bar, uploading profile pic
     @FXML
     protected void showImage() {
+        // Open file chooser to select an image file
         File file = (new FileChooser()).showOpenDialog(img_view.getScene().getWindow());
         if (file != null) {
+            // Display the selected image in the ImageView
             img_view.setImage(new Image(file.toURI().toString()));
 
-            //new code
+            // Create the upload task
             Task<Void> uploadTask = createUploadTask(file, progressBar);
+
+            // Bind progress bar to the upload task's progress property
             progressBar.progressProperty().bind(uploadTask.progressProperty());
+
+            // Start the upload task in a separate thread
             new Thread(uploadTask).start();
         }
     }
+
+    //gets the url for the profile pic from the connection string and puts it into url text field
+    private Task<Void> createUploadTask(File file, ProgressBar progressBar) {
+        return new Task<Void>() {
+            @Override
+            protected Void call() {
+                try {
+                    // Generate a unique name for the image in Azure Blob Storage
+                    String blobName = file.getName();
+
+                    // Create a file input stream for the file to be uploaded
+                    FileInputStream fileInputStream = new FileInputStream(file);
+                    long fileSize = file.length();
+
+                    // Create a BlobClient to upload the file
+                    BlobClient blobClient = store.getContainerClient().getBlobClient(blobName);
+
+                    // Set the file upload with progress reporting
+                    blobClient.upload(fileInputStream, fileSize, true);
+
+                    // Report progress (100% when done)
+                    updateProgress(1, 1); // Update progress to 100%
+
+                    // Get the URL of the uploaded image from Azure Blob Storage
+                    String uploadedImageUrl = store.getContainerClient().getBlobClient(blobName).getBlobUrl();
+
+                    // Set the uploaded image URL to the text field
+                    javafx.application.Platform.runLater(() -> {
+                        imageURL.setText(uploadedImageUrl);
+                        statusLabel.setText("Image uploaded successfully.");
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javafx.application.Platform.runLater(() -> {
+                        statusLabel.setText("Error uploading image.");
+                    });
+                }
+                return null;
+            }
+        };
+    }
+
+
 
     @FXML
     protected void addRecord() {
@@ -530,36 +582,5 @@ public class DB_GUI_Controller implements Initializable {
             this.lname = date;
             this.major = venue;
         }
-    }
-
-    //new code for progress bar, uploading profile pic
-    //part2
-    private Task<Void> createUploadTask(File file, ProgressBar progressBar) {
-        return new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                BlobClient blobClient = store.getContainerClient().getBlobClient(file.getName());
-                long fileSize = Files.size(file.toPath());
-                long uploadedBytes = 0;
-
-                try (FileInputStream fileInputStream = new FileInputStream(file);
-                     OutputStream blobOutputStream = blobClient.getBlockBlobClient().getBlobOutputStream()) {
-
-                    byte[] buffer = new byte[1024 * 1024]; // 1 MB buffer size
-                    int bytesRead;
-
-                    while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                        blobOutputStream.write(buffer, 0, bytesRead);
-                        uploadedBytes += bytesRead;
-
-                        // Calculate and update progress as a percentage
-                        int progress = (int) ((double) uploadedBytes / fileSize * 100);
-                        updateProgress(progress, 100);
-                    }
-                }
-
-                return null;
-            }
-        };
     }
 }
