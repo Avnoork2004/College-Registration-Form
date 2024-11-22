@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +21,10 @@ import javafx.util.Duration;
 
 
 public class LoginController {
+
+    //college image
+    @FXML
+    private ImageView collegeImage;
 
     @FXML
     private Button loginBtn;
@@ -41,6 +46,7 @@ public class LoginController {
 
     @FXML
     private GridPane rootpane;
+
     public void initialize() {
         rootpane.setBackground(new Background(
                         createImage("https://edencoding.com/wp-content/uploads/2021/03/layer_06_1920x1080.png"),
@@ -59,6 +65,8 @@ public class LoginController {
         fadeOut2.setToValue(1);
         fadeOut2.play();
     }
+
+
     private static BackgroundImage createImage(String url) {
         return new BackgroundImage(
                 new Image(url),
