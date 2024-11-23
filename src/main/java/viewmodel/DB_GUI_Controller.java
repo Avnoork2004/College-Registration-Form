@@ -115,6 +115,10 @@ public class DB_GUI_Controller implements Initializable {
 
 
             //new code
+
+            // Links edit menu item to the editRecord method
+            editItem.setOnAction(event -> editRecord());
+
             // Disables the "Edit" button at first
             editBtn.setDisable(true);
             //Disables "delete" button at first
