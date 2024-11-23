@@ -167,6 +167,19 @@ public class DB_GUI_Controller implements Initializable {
                 }
             });
 
+            // Added event handler for Ctrl + C (Keyboard shortcut)
+            Platform.runLater(() -> {
+                if (menuBar.getScene() != null) {
+                    menuBar.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                        // Checks if Ctrl + C is pressed
+                        if (event.isControlDown() && event.getCode() == KeyCode.C) {
+                            // Trigger the copyRecord method when Ctrl + C is pressed
+                            copyRecord();
+                        }
+                    });
+                }
+            });
+
             // Links edit menu item to the editRecord method
             editItem.setOnAction(event -> editRecord());
 
