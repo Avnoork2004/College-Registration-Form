@@ -1,5 +1,11 @@
 package viewmodel;
 
+import javafx.application.Platform;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.control.MenuBar;
+
 import javafx.scene.control.ComboBox;
 import com.azure.storage.blob.BlobClient;
 import dao.DbConnectivityClass;
@@ -20,6 +26,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -115,6 +124,18 @@ public class DB_GUI_Controller implements Initializable {
 
 
             //new code
+            // Added event handler for Ctrl + E (Keyboard shortcut)
+            Platform.runLater(() -> {
+                if (menuBar.getScene() != null) {
+                    menuBar.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                        // Checks if Ctrl + E is pressed
+                        if (event.isControlDown() && event.getCode() == KeyCode.E) {
+                            // Trigger the editRecord method when Ctrl + E is pressed
+                            editRecord();
+                        }
+                    });
+                }
+            });
 
             // Links edit menu item to the editRecord method
             editItem.setOnAction(event -> editRecord());
@@ -411,20 +432,18 @@ public class DB_GUI_Controller implements Initializable {
         Person p = tv.getSelectionModel().getSelectedItem();
         int index = data.indexOf(p);
         Person p2 = new Person(index + 1, first_name.getText(), last_name.getText(), department.getText(),
-                majorComboBox.getValue().toString(), email.getText(),  imageURL.getText());
+                majorComboBox.getValue().toString(), email.getText(), imageURL.getText());
         cnUtil.editUser(p.getId(), p2);
         data.remove(p);
         data.add(index, p2);
         tv.getSelectionModel().select(index);
 
-        //new code
+        // Update status label with success or failure message
         try {
-            // Updates status label to show success message
             statusLabel.setText("Record updated successfully.");
-        } catch (Exception e) {  //exception
-            statusLabel.setText("Record added successfully.");
+        } catch (Exception e) {
+            statusLabel.setText("Record was not updated successfully.");
         }
-
     }
 
     @FXML
