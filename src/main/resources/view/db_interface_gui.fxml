@@ -124,7 +124,7 @@
                         <Insets bottom="40.0" right="20.0" top="40.0" />
                      </VBox.margin>
                   </Label>
-                        <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#clearForm" styleClass="db_btn" text="Clear">
+                        <Button fx:id="clearBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#clearForm" styleClass="db_btn" text="Clear">
                             <VBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </VBox.margin>

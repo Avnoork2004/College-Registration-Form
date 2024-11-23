@@ -59,6 +59,10 @@ public class DB_GUI_Controller implements Initializable {
     @FXML
     private Button addBtn;
 
+    //added clear btn
+    @FXML
+    private Button clearBtn;
+
     //added a status message
     @FXML
     private Label statusLabel;
@@ -145,6 +149,19 @@ public class DB_GUI_Controller implements Initializable {
                         if (event.isControlDown() && event.getCode() == KeyCode.D) {
                             // Trigger the deleteRecord method when Ctrl + D is pressed
                             deleteRecord();
+                        }
+                    });
+                }
+            });
+
+            // Added event handler for Ctrl + R (Keyboard shortcut)
+            Platform.runLater(() -> {
+                if (menuBar.getScene() != null) {
+                    menuBar.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                        // Checks if Ctrl + R is pressed
+                        if (event.isControlDown() && event.getCode() == KeyCode.R) {
+                            // Trigger the clearForm method when Ctrl + R is pressed
+                            clearForm();
                         }
                     });
                 }
