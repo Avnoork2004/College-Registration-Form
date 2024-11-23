@@ -137,6 +137,19 @@ public class DB_GUI_Controller implements Initializable {
                 }
             });
 
+            // Added event handler for Ctrl + D (Keyboard shortcut)
+            Platform.runLater(() -> {
+                if (menuBar.getScene() != null) {
+                    menuBar.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                        // Checks if Ctrl + D is pressed
+                        if (event.isControlDown() && event.getCode() == KeyCode.D) {
+                            // Trigger the deleteRecord method when Ctrl + D is pressed
+                            deleteRecord();
+                        }
+                    });
+                }
+            });
+
             // Links edit menu item to the editRecord method
             editItem.setOnAction(event -> editRecord());
 
