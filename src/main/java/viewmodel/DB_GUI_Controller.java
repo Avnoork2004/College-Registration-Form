@@ -173,6 +173,10 @@ public class DB_GUI_Controller implements Initializable {
             // Links delete menu item to the deleteRecord method
             deleteItem.setOnAction(event -> deleteRecord());
 
+            // Links copy menu item to the copyRecord method
+            CopyItem.setOnAction(event -> copyRecord());
+
+
 
             // Disables the "Edit" button at first
             editBtn.setDisable(true);
@@ -201,6 +205,8 @@ public class DB_GUI_Controller implements Initializable {
                     boolean isSelected = newValue != null;
                     editItem.setDisable(!isSelected);
                     deleteItem.setDisable(!isSelected);
+
+                    CopyItem.setDisable(!isSelected);
 
 
                 }
@@ -488,6 +494,35 @@ public class DB_GUI_Controller implements Initializable {
         data.remove(index);
         tv.getSelectionModel().select(index);
     }
+
+    @FXML
+    private void copyRecord() {
+        // Gets selected record from the table
+        Person selectedPerson = tv.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            // Creates a duplicate of the selected record
+            Person copiedPerson = new Person(
+                    data.size() + 1, // Assigns a new ID
+                    selectedPerson.getFirstName(),
+                    selectedPerson.getLastName(),
+                    selectedPerson.getDepartment(),
+                    selectedPerson.getMajor(),
+                    selectedPerson.getEmail(),
+                    selectedPerson.getImageURL()
+            );
+
+            // Adds duplicated record to TableView and database
+            data.add(copiedPerson);
+            cnUtil.insertUser(copiedPerson); // inserts into the database
+
+            // Updates status label to show a success message
+            statusLabel.setText("Record copied successfully.");
+        } else {
+            // Shows an error message if no record is selected
+            statusLabel.setText("No record selected to copy.");
+        }
+    }
+
 
 
 
