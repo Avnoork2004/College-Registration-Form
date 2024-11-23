@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import service.UserSession;
+
+import java.util.prefs.Preferences;
 
 
 public class SignUpController {
@@ -105,11 +108,58 @@ public class SignUpController {
     }
 
 
+
+//creates an account and stores credentials into preference file
     public void createNewAccount(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Your information has been stored into the database");
-        alert.showAndWait();
+        // Retrieve input from fields
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String email = emailField.getText();
+
+        // Check validity again before saving (if needed)
+        if (!username.matches(usernameRegex)) {
+            signupValidationMessage.setText("Invalid username.");
+            return;
+        }
+        if (!password.matches(passwordRegex)) {
+            signupValidationMessage.setText("Invalid password.");
+            return;
+        }
+        if (!confirmPasswordField.getText().equals(password)) {
+            signupValidationMessage.setText("Passwords do not match.");
+            return;
+        }
+        if (!email.matches(emailRegex)) {
+            signupValidationMessage.setText("Invalid email.");
+            return;
+        }
+
+        try {
+            // Store data in Preferences
+            Preferences userPreferences = Preferences.userRoot().node(this.getClass().getName());
+            userPreferences.put("USERNAME", username);
+            userPreferences.put("PASSWORD", password);
+            userPreferences.put("EMAIL", email);
+
+            // Set the current user session
+            UserSession.getInstance(username, password);
+
+            // Show success alert
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Account Created");
+            alert.setContentText("Your account has been successfully created and stored.");
+            alert.showAndWait();
+
+            // Redirect to login screen
+            goBack(actionEvent);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            signupValidationMessage.setText("Error storing account information. Please try again.");
+        }
     }
+
+
 
     public void goBack(ActionEvent actionEvent) {
         try {

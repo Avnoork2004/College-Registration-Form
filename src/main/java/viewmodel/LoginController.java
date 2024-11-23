@@ -8,16 +8,15 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import service.UserSession;
 
+import java.util.prefs.Preferences;
 
 
 public class LoginController {
@@ -74,19 +73,55 @@ public class LoginController {
                 new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true));
     }
+
+    //gets the stored info from signup
     @FXML
     public void login(ActionEvent actionEvent) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/db_interface_gui.fxml"));
-            Scene scene = new Scene(root, 900, 600);
-            scene.getStylesheets().add(getClass().getResource("/css/lightTheme.css").toExternalForm());
-            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Retrieve input from username and password fields
+        String enteredUsername = usernameTextField.getText();
+        String enteredPassword = passwordField.getText();
+
+        // Access stored credentials from Preferences
+        Preferences userPreferences = Preferences.userRoot().node(SignUpController.class.getName());
+        String storedUsername = userPreferences.get("USERNAME", null);
+        String storedPassword = userPreferences.get("PASSWORD", null);
+
+        if (storedUsername == null || storedPassword == null) {
+            // No user account exists
+            showErrorAlert("No account found. Please sign up first.");
+            return;
+        }
+
+        // Validate credentials
+        if (enteredUsername.equals(storedUsername) && enteredPassword.equals(storedPassword)) {
+            // Login successful, set user session
+            UserSession.getInstance(storedUsername, storedPassword);
+
+            // Redirect to the next screen
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/view/db_interface_gui.fxml"));
+                Scene scene = new Scene(root, 900, 600);
+                scene.getStylesheets().add(getClass().getResource("/css/lightTheme.css").toExternalForm());
+                Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showErrorAlert("Failed to load the application interface.");
+            }
+        } else {
+            // Credentials do not match
+            showErrorAlert("Invalid username or password. Please try again.");
         }
     }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Login Error");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     public void signUp(ActionEvent actionEvent) {
         try {

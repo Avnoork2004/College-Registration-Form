@@ -80,7 +80,7 @@
          </image>
       </ImageView>
           <PasswordField fx:id="passwordField" style="-fx-border-color: BLACK;" styleClass="login_password_field" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-          <TextField id="emailTextField" fx:id="usernameTextField" prefHeight="28.0" prefWidth="400.0" promptText="email_id@domain.edu" style="-fx-border-color: BLACK;" styleClass="login_text_field" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+          <TextField id="emailTextField" fx:id="usernameTextField" prefHeight="28.0" prefWidth="400.0" promptText="Alphanumeric, 5-20 chars" style="-fx-border-color: BLACK;" styleClass="login_text_field" GridPane.columnIndex="2" GridPane.rowIndex="6" />
           <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="208.0" style="-fx-background-color: Green; -fx-border-color: BLACK;" styleClass="login_button" text="Login" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="6">
               <font>
                   <Font name="System Bold" size="18.0" />
