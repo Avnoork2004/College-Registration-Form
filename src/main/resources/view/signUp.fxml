@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -24,30 +26,28 @@
     </columnConstraints>
     <rowConstraints>
         <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="75.39999923706054" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="250.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="37.20000457763673" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="129.0" minHeight="0.0" prefHeight="55.99999542236327" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="250.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="277.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="277.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="277.0" minHeight="10.0" prefHeight="64.80001831054688" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="161.99998168945314" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="335.1999877929687" minHeight="5.999987792968739" prefHeight="26.000024414062523" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="335.1999877929687" minHeight="10.0" prefHeight="31.5999755859375" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="1">
-            <children>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="6">
+         <children>
                 <Label alignment="CENTER" focusTraversable="false" prefHeight="74.0" prefWidth="1099.0" style="-fx-border-color: BLACK;" text="Sign Up New User Account">
                     <font>
                         <Font name="System Bold" size="36.0" />
                     </font>
                 </Label>
-            </children>
+         </children>
         </HBox>
-        <VBox alignment="CENTER_RIGHT" fillWidth="false" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UserName: ">
                <font>
@@ -55,11 +55,31 @@
                </font>
             </Text>
          </children></VBox>
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="usernameField" promptText="Alphanumeric, 5-20 chars" />
          </children></VBox>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children></VBox>
+        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+         <children>
+              <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <PasswordField fx:id="confirmPasswordField" promptText="Passwords must match" />
+               </children>
+            </VBox>
+         </children></VBox>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password: ">
                <font>
@@ -67,23 +87,11 @@
                </font>
             </Text>
          </children></VBox>
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5">
+        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <children>
             <PasswordField fx:id="passwordField" promptText="1 uppercase, 1 lowercase, 1 digit, and 8+ characters" />
          </children></VBox>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password: ">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Text>
-         </children></VBox>
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6">
-         <children>
-            <PasswordField fx:id="confirmPasswordField" promptText="Passwords must match" />
-         </children></VBox>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email: ">
                <font>
@@ -91,16 +99,16 @@
                </font>
             </Text>
          </children></VBox>
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7">
+        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5">
          <children>
             <TextField fx:id="emailField" promptText="email_id@domain.edu" />
          </children></VBox>
         <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-        <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
+        <VBox alignment="CENTER_LEFT" prefHeight="8.0" prefWidth="322.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9">
          <children>
             <Label fx:id="signupValidationMessage" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="381.0" textAlignment="CENTER" />
          </children></VBox>
-        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9">
+        <VBox alignment="TOP_CENTER" prefHeight="96.0" prefWidth="361.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
             <children>
                 <Button fx:id="newAccountBtn" mnemonicParsing="false" onAction="#createNewAccount" prefHeight="43.0" prefWidth="199.0" style="-fx-background-color: GREY; -fx-border-color: BLACK;" text="Create New Account" textAlignment="CENTER" textFill="WHITE">
                     <VBox.margin>
@@ -126,5 +134,10 @@
                 <Insets />
             </opaqueInsets>
         </VBox>
+      <ImageView fitHeight="150.0" fitWidth="362.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+         <image>
+            <Image url="C:\Users\avnoo\IdeaProjects\csc_w4_lab_dynamiclayout_demo\Week-10---GUI-and-Data-Management\College-Registration-Form\src\main\resources\images\classroom.png" />
+         </image>
+      </ImageView>
     </children>
 </GridPane>
