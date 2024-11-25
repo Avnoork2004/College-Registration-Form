@@ -76,9 +76,8 @@
             </Button>
       <ImageView fx:id="collegeImage" fitHeight="407.0" fitWidth="706.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <image>
-            <Image url="C:\Users\avnoo\IdeaProjects\csc_w4_lab_dynamiclayout_demo\Week-10---GUI-and-Data-Management\College-Registration-Form\src\main\resources\images\college.png" />
-         </image>
-      </ImageView>
+            <Image url="@../images/college.png" />
+         </image></ImageView>
           <PasswordField fx:id="passwordField" style="-fx-border-color: BLACK;" styleClass="login_password_field" GridPane.columnIndex="2" GridPane.rowIndex="7" />
           <TextField id="emailTextField" fx:id="usernameTextField" prefHeight="28.0" prefWidth="400.0" promptText="Alphanumeric, 5-20 chars" style="-fx-border-color: BLACK;" styleClass="login_text_field" GridPane.columnIndex="2" GridPane.rowIndex="6" />
           <Button fx:id="loginBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="208.0" style="-fx-background-color: Green; -fx-border-color: BLACK;" styleClass="login_button" text="Login" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="6">

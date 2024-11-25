@@ -129,15 +129,17 @@
             </children>
         </VBox>
         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7" GridPane.rowSpan="2" />
-        <VBox alignment="BOTTOM_CENTER" prefHeight="280.0" prefWidth="298.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
+        <VBox alignment="BOTTOM_CENTER" prefHeight="280.0" prefWidth="298.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
+         <children>
+            <ImageView fitHeight="149.0" fitWidth="307.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/classroom.png" />
+               </image>
+            </ImageView>
+         </children>
         </VBox>
-      <ImageView fitHeight="150.0" fitWidth="362.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
-         <image>
-            <Image url="C:\Users\avnoo\IdeaProjects\csc_w4_lab_dynamiclayout_demo\Week-10---GUI-and-Data-Management\College-Registration-Form\src\main\resources\images\classroom.png" />
-         </image>
-      </ImageView>
     </children>
 </GridPane>
