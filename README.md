@@ -3,6 +3,7 @@
 
 The College Registration Form is a desktop application designed to manage college student registrations with a focus on user experience and data integrity. It includes features such as field validation, UI state management, profile picture uploads, menu actions, and CSV data import/export. The application is implemented using JavaFX and integrates thread safety, user preferences, and database interactions.
 
+
 ## **Features**
 ### **1. UI State Management**
 
